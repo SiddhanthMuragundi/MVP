@@ -1,0 +1,45 @@
+# Render deployment blueprint.
+#
+# After the first deploy, set the two cross-referencing values:
+#   - backend  CORS_ORIGINS      to the deployed frontend URL
+#   - frontend VITE_API_BASE_URL to the deployed backend URL + "/api"
+
+databases:
+  - name: saathiya-db
+    databaseName: saathiya
+    user: saathiya
+    plan: free
+
+services:
+  - type: web
+    name: saathiya-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: saathiya-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false
+      - key: SMTP_HOST
+        value: ""
+
+  - type: web
+    name: saathiya-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

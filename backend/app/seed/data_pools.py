@@ -1,0 +1,212 @@
+"""Culturally-coherent Indian profile pools.
+
+Names, religion, region (city) and mother tongue are grouped into communities, so a
+generated profile reads as authentic (e.g. a Tamil Hindu from Chennai, a Punjabi Sikh
+from Chandigarh, a Malayali Christian from Kochi) instead of mismatched combinations
+like a Hindi/Hindu name tagged Muslim. Castes are only set where they apply.
+"""
+from __future__ import annotations
+
+# Each community drives name, religion, mother tongue, region and caste together.
+COMMUNITIES = [
+    {
+        "label": "North Indian Hindu",
+        "religion": "Hindu",
+        "weight": 16,
+        "male": ["Aarav", "Aditya", "Rahul", "Rohit", "Vikram", "Karan", "Nikhil", "Ankit", "Manish", "Gaurav", "Saurabh", "Varun", "Harsh", "Pranav", "Yash"],
+        "female": ["Ananya", "Priya", "Neha", "Pooja", "Shreya", "Divya", "Riya", "Kavya", "Sneha", "Megha", "Swati", "Ritika", "Aditi", "Nidhi", "Anjali"],
+        "last": ["Sharma", "Verma", "Gupta", "Agarwal", "Mishra", "Joshi", "Saxena", "Khanna", "Malhotra", "Chauhan"],
+        "tongues": ["Hindi"],
+        "cities": ["Delhi", "Noida", "Gurugram", "Jaipur", "Lucknow", "Indore"],
+        "castes": ["Brahmin", "Kshatriya", "Vaishya", "Kayastha", "Rajput"],
+    },
+    {
+        "label": "Tamil Hindu",
+        "religion": "Hindu",
+        "weight": 12,
+        "male": ["Karthik", "Arjun", "Vignesh", "Suresh", "Praveen", "Hari", "Surya", "Aravind", "Karthikeyan", "Bharath"],
+        "female": ["Lakshmi", "Divya", "Anitha", "Kavya", "Deepika", "Janani", "Meena", "Revathi", "Aishwarya", "Keerthana"],
+        "last": ["Iyer", "Iyengar", "Subramanian", "Krishnan", "Raman", "Srinivasan", "Natarajan"],
+        "tongues": ["Tamil"],
+        "cities": ["Chennai", "Coimbatore", "Madurai"],
+        "castes": ["Brahmin", "Mudaliar", "Chettiar", "Nadar", "Vanniyar"],
+        "optional_surname": True,  # many Tamil names go by given name + father's initial
+    },
+    {
+        "label": "Telugu Hindu",
+        "religion": "Hindu",
+        "weight": 11,
+        "male": ["Vamsi", "Teja", "Sai", "Naveen", "Kiran", "Ravi", "Sandeep", "Charan", "Rajesh", "Surya"],
+        "female": ["Sravani", "Divya", "Anusha", "Swathi", "Deepthi", "Padma", "Lakshmi", "Harika", "Sahithi"],
+        "last": ["Reddy", "Naidu", "Rao", "Chowdary", "Varma", "Prasad"],
+        "tongues": ["Telugu"],
+        "cities": ["Hyderabad", "Vijayawada", "Visakhapatnam"],
+        "castes": ["Reddy", "Kamma", "Kapu", "Brahmin", "Velama"],
+    },
+    {
+        "label": "Kannada Hindu",
+        "religion": "Hindu",
+        "weight": 10,
+        "male": ["Manoj", "Prajwal", "Darshan", "Kiran", "Vinay", "Arjun", "Suhas", "Nikhil"],
+        "female": ["Sahana", "Divya", "Pooja", "Anjali", "Spoorthi", "Chaitra", "Ananya"],
+        "last": ["Gowda", "Shetty", "Rao", "Hegde", "Bhat", "Kulkarni"],
+        "tongues": ["Kannada"],
+        "cities": ["Bengaluru", "Mysuru", "Mangaluru"],
+        "castes": ["Lingayat", "Vokkaliga", "Brahmin", "Bunt"],
+    },
+    {
+        "label": "Malayali Hindu",
+        "religion": "Hindu",
+        "weight": 8,
+        "male": ["Arun", "Nikhil", "Anand", "Vishnu", "Hari", "Akhil", "Gokul", "Sreejith"],
+        "female": ["Lakshmi", "Anjali", "Aparna", "Gauri", "Meera", "Athira", "Parvathy"],
+        "last": ["Nair", "Menon", "Pillai", "Warrier", "Kurup", "Nambiar"],
+        "tongues": ["Malayalam"],
+        "cities": ["Kochi", "Thiruvananthapuram", "Kozhikode"],
+        "castes": ["Nair", "Ezhava", "Namboothiri"],
+        "optional_surname": True,  # many Malayali names go by given name + initial
+    },
+    {
+        "label": "Marathi Hindu",
+        "religion": "Hindu",
+        "weight": 11,
+        "male": ["Aditya", "Rohan", "Omkar", "Saurabh", "Tushar", "Nilesh", "Prasad", "Mandar"],
+        "female": ["Snehal", "Priya", "Aishwarya", "Madhuri", "Pallavi", "Rutuja", "Mrunal"],
+        "last": ["Kulkarni", "Deshmukh", "Joshi", "Patil", "Pawar", "Jadhav", "Bhosale"],
+        "tongues": ["Marathi"],
+        "cities": ["Mumbai", "Pune", "Nagpur", "Nashik"],
+        "castes": ["Maratha", "Brahmin", "Deshastha", "Kunbi"],
+    },
+    {
+        "label": "Bengali Hindu",
+        "religion": "Hindu",
+        "weight": 10,
+        "male": ["Soumya", "Arnab", "Sayan", "Abhishek", "Rishav", "Anirban", "Subhas", "Indranil"],
+        "female": ["Riya", "Ananya", "Paromita", "Sohini", "Debolina", "Trisha", "Ankita"],
+        "last": ["Banerjee", "Chatterjee", "Mukherjee", "Bose", "Ghosh", "Das", "Dutta", "Sen"],
+        "tongues": ["Bengali"],
+        "cities": ["Kolkata", "Howrah", "Durgapur"],
+        "castes": ["Brahmin", "Kayastha", "Baidya"],
+    },
+    {
+        "label": "Gujarati Hindu",
+        "religion": "Hindu",
+        "weight": 9,
+        "male": ["Harsh", "Jay", "Mihir", "Parth", "Dhruv", "Kunal", "Raj", "Meet"],
+        "female": ["Khushi", "Hetal", "Priya", "Krupa", "Foram", "Janvi", "Nisha"],
+        "last": ["Patel", "Desai", "Trivedi", "Joshi", "Bhatt", "Modi"],
+        "tongues": ["Gujarati"],
+        "cities": ["Ahmedabad", "Surat", "Vadodara", "Rajkot"],
+        "castes": ["Patel", "Brahmin", "Vaishya", "Lohana"],
+    },
+    {
+        "label": "Punjabi Sikh",
+        "religion": "Sikh",
+        "weight": 8,
+        "male": ["Harpreet", "Gurpreet", "Manpreet", "Jaspreet", "Arjan", "Ranbir", "Sukhwinder", "Amrinder", "Harman"],
+        "female": ["Simran", "Harleen", "Gurleen", "Jasleen", "Navjot", "Amrit", "Manjot", "Sehaj"],
+        "last": ["Singh", "Gill", "Sandhu", "Dhillon", "Brar", "Sidhu", "Grewal"],
+        "tongues": ["Punjabi"],
+        "cities": ["Chandigarh", "Amritsar", "Ludhiana", "Jalandhar"],
+        "castes": [],
+    },
+    {
+        "label": "Muslim",
+        "religion": "Muslim",
+        "weight": 12,
+        "male": ["Imran", "Arsalan", "Faizan", "Zaid", "Rehan", "Aamir", "Bilal", "Saif", "Adil", "Tariq", "Asif", "Junaid"],
+        "female": ["Ayesha", "Fatima", "Zoya", "Sana", "Iqra", "Hina", "Nazia", "Sadia", "Aaliya", "Mehreen", "Rabia"],
+        "last": ["Khan", "Sheikh", "Ansari", "Qureshi", "Syed", "Pathan", "Mirza", "Shaikh"],
+        "tongues": ["Urdu", "Hindi"],
+        "cities": ["Hyderabad", "Lucknow", "Delhi", "Bhopal", "Kolkata"],
+        "castes": [],
+    },
+    {
+        "label": "Christian",
+        "religion": "Christian",
+        "weight": 7,
+        "male": ["Thomas", "Jacob", "Joseph", "Daniel", "Aaron", "Ryan", "Nathan", "Albin", "Jibin", "Rohan"],
+        "female": ["Maria", "Grace", "Rachel", "Anna", "Mary", "Elsa", "Christy", "Jincy", "Riya", "Anu"],
+        "last": ["Thomas", "Mathew", "George", "Varghese", "Joseph", "Kurian", "D'Souza", "Fernandes", "Pereira"],
+        "tongues": ["Malayalam", "Konkani", "English"],
+        "cities": ["Kochi", "Goa", "Bengaluru", "Chennai"],
+        "castes": [],
+    },
+    {
+        "label": "Jain",
+        "religion": "Jain",
+        "weight": 5,
+        "male": ["Rishabh", "Naman", "Sanket", "Parin", "Hardik", "Mahavir", "Aayush", "Devansh"],
+        "female": ["Khushboo", "Pooja", "Nidhi", "Shreya", "Tanvi", "Riya", "Disha"],
+        "last": ["Jain", "Shah", "Mehta", "Bhansali", "Kothari", "Sancheti"],
+        "tongues": ["Gujarati", "Hindi", "Marwari"],
+        "cities": ["Mumbai", "Ahmedabad", "Jaipur", "Pune"],
+        "castes": [],
+    },
+]
+
+# Careers bundle degree + college + employer + role so a profile reads coherently
+# (no "B.Com graduate working as a Senior Engineer"). income_mult nudges pay by field.
+CAREERS = [
+    {
+        "field": "Engineering / Tech",
+        "income_mult": 1.15,
+        "degrees": ["B.Tech", "B.E.", "M.Tech"],
+        "designations": ["Software Engineer", "Senior Engineer", "Data Analyst", "Product Manager", "Engineering Lead"],
+        "colleges": ["IIT Bombay", "IIT Madras", "IIT Delhi", "BITS Pilani", "NIT Trichy", "VIT Vellore", "Anna University", "Manipal Institute of Technology", "SRM University"],
+        "companies": ["Infosys", "TCS", "Wipro", "Flipkart", "Razorpay", "Zomato", "Swiggy", "Google", "Microsoft", "Amazon", "Freshworks", "PhonePe"],
+    },
+    {
+        "field": "Medicine",
+        "income_mult": 1.25,
+        "degrees": ["MBBS", "MD", "BDS"],
+        "designations": ["Doctor", "Surgeon", "Physician", "Dentist", "Medical Officer"],
+        "colleges": ["AIIMS Delhi", "CMC Vellore", "KMC Manipal", "Maulana Azad Medical College", "Grant Medical College", "St. John's Medical College"],
+        "companies": ["Apollo Hospitals", "Fortis Healthcare", "Manipal Hospitals", "Narayana Health", "Private Practice"],
+    },
+    {
+        "field": "Finance / Accounting",
+        "income_mult": 1.2,
+        "degrees": ["B.Com", "CA", "MBA", "BBA"],
+        "designations": ["Chartered Accountant", "Financial Analyst", "Investment Banker", "Auditor", "Finance Manager"],
+        "colleges": ["Shri Ram College of Commerce", "Christ University", "Narsee Monjee", "St. Xavier's College", "Symbiosis"],
+        "companies": ["Deloitte", "KPMG", "EY", "PwC", "ICICI Bank", "HDFC Bank", "Kotak Mahindra"],
+    },
+    {
+        "field": "Business / Management",
+        "income_mult": 1.3,
+        "degrees": ["MBA", "BBA", "B.Com"],
+        "designations": ["Product Manager", "Marketing Manager", "Consultant", "Operations Lead", "Business Analyst"],
+        "colleges": ["IIM Ahmedabad", "IIM Bangalore", "ISB Hyderabad", "XLRI Jamshedpur", "Symbiosis"],
+        "companies": ["McKinsey & Company", "BCG", "Accenture", "Deloitte", "Amazon", "Flipkart", "Hindustan Unilever"],
+    },
+    {
+        "field": "Design / Media",
+        "income_mult": 0.9,
+        "degrees": ["B.Des", "BA", "B.Sc"],
+        "designations": ["UX Designer", "Graphic Designer", "Content Strategist", "Brand Manager"],
+        "colleges": ["NID Ahmedabad", "Srishti Institute", "Delhi University", "Christ University", "Symbiosis"],
+        "companies": ["Swiggy", "Zomato", "Freshworks", "Razorpay", "Ogilvy", "Self-employed"],
+    },
+    {
+        "field": "Science / Academia",
+        "income_mult": 0.95,
+        "degrees": ["M.Sc", "PhD", "B.Sc", "M.Tech"],
+        "designations": ["Research Scientist", "Data Scientist", "Assistant Professor", "Lecturer"],
+        "colleges": ["IISc Bangalore", "Delhi University", "Jadavpur University", "University of Hyderabad", "TIFR"],
+        "companies": ["IISc Bangalore", "ISRO", "DRDO", "TIFR", "Honeywell R&D"],
+    },
+    {
+        "field": "Law",
+        "income_mult": 1.1,
+        "degrees": ["LLB", "BA LLB"],
+        "designations": ["Lawyer", "Legal Counsel", "Associate"],
+        "colleges": ["NLSIU Bangalore", "NALSAR Hyderabad", "Symbiosis Law School", "ILS Pune"],
+        "companies": ["Cyril Amarchand Mangaldas", "AZB & Partners", "Khaitan & Co", "Independent Practice"],
+    },
+]
+
+HOBBIES = [
+    "Reading", "Travelling", "Cooking", "Photography", "Music", "Painting", "Yoga",
+    "Cricket", "Trekking", "Gaming", "Dancing", "Gardening", "Cycling", "Writing",
+]

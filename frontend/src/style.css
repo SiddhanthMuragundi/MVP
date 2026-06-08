@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans text-maroon-ink bg-ivory;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply font-sans font-semibold text-sm tracking-wide uppercase text-card-warm
+      bg-gradient-to-b from-maroon to-maroon-deep px-4 py-3 rounded-sm cursor-pointer
+      transition disabled:opacity-60 disabled:cursor-not-allowed hover:brightness-110;
+  }
+  .btn-ghost {
+    @apply font-sans text-sm text-maroon bg-transparent border-none cursor-pointer p-0 hover:underline;
+  }
+  .card {
+    @apply bg-card border border-line border-t-[3px] border-t-gold rounded-card;
+  }
+  .input {
+    @apply w-full box-border font-sans text-[15px] px-3.5 py-2.5 border border-line rounded-sm
+      bg-white text-maroon-ink outline-none focus-visible:ring-2 focus-visible:ring-gold;
+  }
+  .field-label {
+    @apply font-sans text-[11px] tracking-[0.08em] uppercase text-muted mb-0.5;
+  }
+  .pill {
+    @apply inline-flex items-center gap-1.5 font-sans text-xs font-medium text-white px-2.5 py-1 rounded-full whitespace-nowrap;
+  }
+  .eyebrow {
+    @apply font-sans text-[11px] tracking-[0.22em] uppercase text-marigold;
+  }
+}
+
+.bg-dotted {
+  background-image: radial-gradient(rgba(232, 212, 154, 0.18) 1px, transparent 1px);
+  background-size: 22px 22px;
+}

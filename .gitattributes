@@ -1,0 +1,7 @@
+# Normalise line endings to LF in the repository (important for Linux hosting).
+* text=auto eol=lf
+
+# Binary
+*.svg text eol=lf
+*.png binary
+*.jpg binary
