@@ -166,11 +166,11 @@ the backend URL followed by `/api`.
 
 Defaults are suitable for local development; override them in a hosted environment.
 
-| Variable                      | Purpose                                       | Default                    |
-| ----------------------------- | --------------------------------------------- | -------------------------- |
-| `JWT_SECRET`                  | Token signing secret                          | development value          |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access-token lifetime, in minutes             | 480 (eight hours)          |
-| `ENCRYPTION_KEY`              | Base64 32-byte AES key for encrypting AI keys | derived development key    |
-| `DATABASE_URL`                | PostgreSQL connection string                  | provided by Docker Compose |
-| `CORS_ORIGINS`                | Allowed frontend origins                      | http://localhost:5173      |
-| `SMTP_HOST`, `SMTP_PORT`      | Outgoing mail server                          | Mailpit                    |
+| Variable                      | Purpose                                              | Default                    |
+| ----------------------------- | ---------------------------------------------------- | -------------------------- |
+| `JWT_SECRET`                  | Token signing secret                                 | development value          |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access-token lifetime, in minutes                    | 480 (eight hours)          |
+| `ENCRYPTION_KEY`              | Base64-encoded 256-bit (32-byte) AES key for AI keys | derived development key    |
+| `DATABASE_URL`                | PostgreSQL connection string                         | provided by Docker Compose |
+| `CORS_ORIGINS`                | Allowed frontend origins                             | http://localhost:5173      |
+| `SMTP_HOST`, `SMTP_PORT`      | Outgoing mail server                                 | Mailpit                    |
