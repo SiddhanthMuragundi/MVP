@@ -6,10 +6,10 @@ calls and meetings, and sends an introduction email.
 
 ## Live application
 
-The application is live at **https://serene-charisma-production-6dd4.up.railway.app**
+The application is live at **https://mvp-1-vad2.onrender.com**
 
 No setup is required to use it. Sign in with one of the sample accounts below. The API
-documentation is available at https://mvp-production-f385.up.railway.app/docs, and the
+documentation is available at https://mvp-6vw7.onrender.com/docs, and the
 introduction emails sent by the Send Match action can be viewed in the demo inbox at
 https://mailpit-production-e4f3.up.railway.app.
 
